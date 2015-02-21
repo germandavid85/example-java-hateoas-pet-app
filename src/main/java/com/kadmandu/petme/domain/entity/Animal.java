@@ -8,9 +8,11 @@ import lombok.Setter;
  * 
  * @author German Potes
  */
-public class Animal{
-    @Getter @Setter
+public class Animal {
+    @Getter
+    @Setter
     private String id;
-    @Getter @Setter
+    @Getter
+    @Setter
     private String name;
 }

@@ -24,52 +24,59 @@ public class AnimalDomainService implements IAnimalDomainService {
 
     /**
      * Service constructor
-     *  
-     * @param animalRepository the persistence service, injected by spring
-     * @param animalTranslator animal translator 
+     * 
+     * @param animalRepository
+     *            the persistence service, injected by spring
+     * @param animalTranslator
+     *            animal translator
      */
     @Autowired
-    public AnimalDomainService(
-        final IAnimalRepositoryService animalRepository,
-        final AnimalDomainPersistenceTranslator animalTranslator) {
+    public AnimalDomainService(final IAnimalRepositoryService animalRepository,
+            final AnimalDomainPersistenceTranslator animalTranslator) {
         this.animalRepositoryService = animalRepository;
         this.animalTranslator = animalTranslator;
     }
 
     @Override
     public List<Animal> getAll() {
-        final List<Animal> animals = new ArrayList<Animal>(animalRepositoryService.getAll().size());
-        for (AnimalRepository animalRepository : animalRepositoryService.getAll()) {
+        final List<Animal> animals = new ArrayList<Animal>(
+                animalRepositoryService.getAll().size());
+        for (AnimalRepository animalRepository : animalRepositoryService
+                .getAll()) {
             animals.add(animalTranslator.translateFrom(animalRepository));
         }
         return animals;
     }
 
     @Override
-    public Animal getOne(final String id) {
-        final Animal animal = animalTranslator.translateFrom(animalRepositoryService.getOne(id));
+    public Animal getOne(final String animalId) {
+        final Animal animal = animalTranslator
+                .translateFrom(animalRepositoryService.getOne(animalId));
         return animal;
     }
 
     @Override
     public Animal create(final Animal entity) {
-        final AnimalRepository animalRepository = animalTranslator.translateTo(entity);
-        final Animal animal = 
-            animalTranslator.translateFrom(animalRepositoryService.create(animalRepository));
+        final AnimalRepository animalRepository = animalTranslator
+                .translateTo(entity);
+        final Animal animal = animalTranslator
+                .translateFrom(animalRepositoryService.create(animalRepository));
         return animal;
     }
 
     @Override
     public Animal update(final Animal entity) {
-        final AnimalRepository animalRepository = animalTranslator.translateTo(entity);
-        final Animal animal = 
-            animalTranslator.translateFrom(animalRepositoryService.create(animalRepository));
+        final AnimalRepository animalRepository = animalTranslator
+                .translateTo(entity);
+        final Animal animal = animalTranslator
+                .translateFrom(animalRepositoryService.update(animalRepository));
         return animal;
     }
 
     @Override
     public void delete(final Animal entity) {
-        final AnimalRepository animalRepository = animalTranslator.translateTo(entity);
+        final AnimalRepository animalRepository = animalTranslator
+                .translateTo(entity);
         animalRepositoryService.delete(animalRepository);
     }
 

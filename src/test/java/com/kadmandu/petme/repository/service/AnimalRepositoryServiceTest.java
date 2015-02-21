@@ -1,8 +1,11 @@
 package com.kadmandu.petme.repository.service;
 
+import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.verify;
 
 import java.util.Collections;
 import java.util.List;
@@ -57,6 +60,34 @@ public class AnimalRepositoryServiceTest {
         AnimalRepository animal = testService.getOne(ANIMAL_ID);
         assertThat("The id of the animal", animal.getId(), is(ANIMAL_ID));
         assertThat("The id of the animal", animal.getName(), is(ANIMAL_NAME));
+    }
+
+    @Test
+    public void testCreate() {
+        AnimalRepository returnedAnimal = new AnimalRepository();
+        when(mockAnimalPeristence.save(animal1)).thenReturn(returnedAnimal);
+
+        assertThat("The returned animal", testService.create(animal1),
+                is(sameInstance(returnedAnimal)));
+        verify(mockAnimalPeristence).save(animal1);
+    }
+
+    @Test
+    public void testUpdate() {
+        AnimalRepository returnedAnimal = new AnimalRepository();
+        when(mockAnimalPeristence.save(animal1)).thenReturn(returnedAnimal);
+
+        assertThat("The returned animal", testService.update(animal1),
+                is(sameInstance(returnedAnimal)));
+        verify(mockAnimalPeristence).save(animal1);
+    }
+
+    @Test
+    public void testDelete() {
+        doNothing().when(mockAnimalPeristence).delete(animal1);
+
+        testService.delete(animal1);
+        verify(mockAnimalPeristence).delete(animal1);
     }
 
 }

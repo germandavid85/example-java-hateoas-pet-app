@@ -1,6 +1,7 @@
 package com.kadmandu.petme.repository.entity;
 
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
 
@@ -20,7 +21,7 @@ public class AnimalRepositoryTest {
         repository.setId(id);
         repository.setName(name);
 
-        assertEquals("wrong assigned id", id, repository.getId());
-        assertEquals("wrong assigned name", name, repository.getName());
+        assertThat("wrong assigned id", repository.getId(), is(id));
+        assertThat("wrong assigned name", repository.getName(), is(name));
     }
 }

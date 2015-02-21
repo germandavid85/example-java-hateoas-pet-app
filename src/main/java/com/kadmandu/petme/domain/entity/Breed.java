@@ -9,11 +9,14 @@ import lombok.Setter;
  * @author German Potes
  */
 public class Breed {
-    @Getter @Setter
+    @Getter
+    @Setter
     private String id;
-    @Getter @Setter
+    @Getter
+    @Setter
     private String name;
-    @Getter @Setter
+    @Getter
+    @Setter
     private Animal animal;
 
 }

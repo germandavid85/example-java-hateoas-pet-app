@@ -26,7 +26,6 @@ public class AnimalRepositoryService implements IAnimalRepositoryService {
      */
     @Autowired
     public AnimalRepositoryService(AnimalPersistence animalPersistence) {
-        super();
         this.animalPersistence = animalPersistence;
     }
 

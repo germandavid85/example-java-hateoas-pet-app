@@ -28,16 +28,19 @@ public class BreedDomainService implements IBreedDomainService {
 
     /**
      * Service constructor
-     *  
-     * @param breedRepositoryService the persistence service, injected by spring
-     * @param breedTranslator breed translator 
-     * @param animalTranslator animal translator 
+     * 
+     * @param breedRepositoryService
+     *            the persistence service, injected by spring
+     * @param breedTranslator
+     *            breed translator
+     * @param animalTranslator
+     *            animal translator
      */
     @Autowired
     public BreedDomainService(
-        final IBreedRepositoryService breedRepositoryService,
-        final BreedDomainPersistenceTranslator breedTranslator,
-        final AnimalDomainPersistenceTranslator animalTranslator) {
+            final IBreedRepositoryService breedRepositoryService,
+            final BreedDomainPersistenceTranslator breedTranslator,
+            final AnimalDomainPersistenceTranslator animalTranslator) {
         this.breedRepositoryService = breedRepositoryService;
         this.breedTranslator = breedTranslator;
         this.animalTranslator = animalTranslator;
@@ -45,7 +48,8 @@ public class BreedDomainService implements IBreedDomainService {
 
     @Override
     public List<Breed> getAll() {
-        final List<BreedRepository> breedsRepo = breedRepositoryService.getAll();
+        final List<BreedRepository> breedsRepo = breedRepositoryService
+                .getAll();
         final List<Breed> breeds = new ArrayList<Breed>(breedsRepo.size());
 
         for (BreedRepository breedRepository : breedsRepo) {
@@ -56,36 +60,42 @@ public class BreedDomainService implements IBreedDomainService {
 
     @Override
     public Breed getOne(final String id) {
-        final Breed breed = breedTranslator.translateFrom(breedRepositoryService.getOne(id));
+        final Breed breed = breedTranslator
+                .translateFrom(breedRepositoryService.getOne(id));
         return breed;
     }
 
     @Override
     public Breed create(final Breed entity) {
-        final BreedRepository breedRepository = breedTranslator.translateTo(entity);
-        final Breed breed = 
-            breedTranslator.translateFrom(breedRepositoryService.create(breedRepository));
+        final BreedRepository breedRepository = breedTranslator
+                .translateTo(entity);
+        final Breed breed = breedTranslator
+                .translateFrom(breedRepositoryService.create(breedRepository));
         return breed;
     }
 
     @Override
     public Breed update(final Breed entity) {
-        final BreedRepository breedRepository = breedTranslator.translateTo(entity);
-        final Breed breed = 
-            breedTranslator.translateFrom(breedRepositoryService.update(breedRepository));
+        final BreedRepository breedRepository = breedTranslator
+                .translateTo(entity);
+        final Breed breed = breedTranslator
+                .translateFrom(breedRepositoryService.update(breedRepository));
         return breed;
     }
 
     @Override
     public void delete(final Breed entity) {
-        final BreedRepository breedRepository = breedTranslator.translateTo(entity);
+        final BreedRepository breedRepository = breedTranslator
+                .translateTo(entity);
         breedRepositoryService.delete(breedRepository);
     }
 
     @Override
     public List<Breed> getByAnimal(final Animal animal) {
-        final AnimalRepository animalRepository = animalTranslator.translateTo(animal);
-        final List<BreedRepository> breedsRepo = breedRepositoryService.getByAnimal(animalRepository);
+        final AnimalRepository animalRepository = animalTranslator
+                .translateTo(animal);
+        final List<BreedRepository> breedsRepo = breedRepositoryService
+                .getByAnimal(animalRepository);
         final List<Breed> breeds = new ArrayList<Breed>(breedsRepo.size());
 
         for (BreedRepository breedRepository : breedsRepo) {
