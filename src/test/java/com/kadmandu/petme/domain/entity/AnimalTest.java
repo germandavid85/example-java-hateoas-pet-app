@@ -23,4 +23,16 @@ public class AnimalTest {
         assertThat("The domain animal id", animal.getId(), is(animalId));
         assertThat("The domain animal name", animal.getName(), is(animalName));
     }
+
+    @Test(expected = NullPointerException.class)
+    public void testSetNullId() {
+        Animal animal = new Animal();
+        animal.setId(null);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void testSetNullName() {
+        Animal animal = new Animal();
+        animal.setName(null);
+    }
 }

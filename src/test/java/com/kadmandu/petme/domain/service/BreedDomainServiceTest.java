@@ -24,11 +24,18 @@ import com.kadmandu.petme.repository.entity.AnimalRepository;
 import com.kadmandu.petme.repository.entity.BreedRepository;
 import com.kadmandu.petme.repository.service.IBreedRepositoryService;
 
+/**
+ * test class for {@link BreedDomainServiceTest}
+ * 
+ * @author German Potes
+ */
 @RunWith(MockitoJUnitRunner.class)
 public class BreedDomainServiceTest {
 
     private final static String BREED_ID = "br123";
     private final static String BREED_NAME = "Golden Retriever";
+    private final static String ANIMAL_ID = "an123";
+    private final static String ANIMAL_NAME = "Dog";
 
     @Mock
     private IBreedRepositoryService mockBreedRepoService;
@@ -41,6 +48,8 @@ public class BreedDomainServiceTest {
     private AnimalDomainPersistenceTranslator animalDomPerTranslator;
     private BreedRepository breedRepo;
     private Breed breedCreate;
+    private AnimalRepository animalRepository;
+    private Animal animal;
 
     private BreedDomainService testService;
 
@@ -54,12 +63,18 @@ public class BreedDomainServiceTest {
         breedRepo = new BreedRepository();
         breedRepo.setId(BREED_ID);
         breedRepo.setName(BREED_NAME);
-        breedRepo.setAnimal(new AnimalRepository());
+        animalRepository = new AnimalRepository();
+        animalRepository.setId(ANIMAL_ID);
+        animalRepository.setName(ANIMAL_NAME);
+        breedRepo.setAnimal(animalRepository);
 
         breedCreate = new Breed();
         breedCreate.setId(BREED_ID);
         breedCreate.setName(BREED_NAME);
-        breedCreate.setAnimal(new Animal());
+        animal = new Animal();
+        animal.setId(ANIMAL_ID);
+        animal.setName(ANIMAL_NAME);
+        breedCreate.setAnimal(animal);
     }
 
     @Test
@@ -72,6 +87,10 @@ public class BreedDomainServiceTest {
         assertThat("The breed id", breeds.get(0).getId(), is(BREED_ID));
         assertThat("The name of the breed", breeds.get(0).getName(),
                 is(BREED_NAME));
+
+        final Animal animal = breeds.get(0).getAnimal();
+        assertThat("The animal id", animal.getId(), is(ANIMAL_ID));
+        assertThat("The name of the animal", animal.getName(), is(ANIMAL_NAME));
     }
 
     @Test
@@ -81,6 +100,10 @@ public class BreedDomainServiceTest {
         Breed breed = testService.getOne(BREED_ID);
         assertThat("The breed id", breed.getId(), is(BREED_ID));
         assertThat("The name of the breed", breed.getName(), is(BREED_NAME));
+
+        final Animal animal = breed.getAnimal();
+        assertThat("The animal id", animal.getId(), is(ANIMAL_ID));
+        assertThat("The name of the animal", animal.getName(), is(ANIMAL_NAME));
     }
 
     @Test
@@ -94,6 +117,10 @@ public class BreedDomainServiceTest {
         assertThat("The breed id", breedCaptor.getValue().getId(), is(BREED_ID));
         assertThat("The name of the breed", breedCaptor.getValue().getName(),
                 is(BREED_NAME));
+
+        final Animal animal = breed.getAnimal();
+        assertThat("The animal id", animal.getId(), is(ANIMAL_ID));
+        assertThat("The name of the animal", animal.getName(), is(ANIMAL_NAME));
     }
 
     @Test
@@ -107,6 +134,11 @@ public class BreedDomainServiceTest {
         assertThat("The breed id", breedCaptor.getValue().getId(), is(BREED_ID));
         assertThat("The name of the breed", breedCaptor.getValue().getName(),
                 is(BREED_NAME));
+
+        final Animal animal = breed.getAnimal();
+
+        assertThat("The animal id", animal.getId(), is(ANIMAL_ID));
+        assertThat("The name of the animal", animal.getName(), is(ANIMAL_NAME));
     }
 
     @Test
@@ -124,16 +156,15 @@ public class BreedDomainServiceTest {
         when(mockBreedRepoService.getByAnimal(animalCaptor.capture()))
                 .thenReturn(Collections.singletonList(breedRepo));
 
-        Animal animal = new Animal();
-        animal.setId("an123");
-        animal.setName("Dog");
         List<Breed> breeds = testService.getByAnimal(animal);
 
         assertThat("The size of breed", breeds.size(), is(1));
         assertThat("The breed id", breeds.get(0).getId(), is(BREED_ID));
         assertThat("The name of the breed", breeds.get(0).getName(),
                 is(BREED_NAME));
-        assertThat("The animal id", animalCaptor.getValue().getId(),
-                is("an123"));
+        
+        final Animal animal = breeds.get(0).getAnimal();
+        assertThat("The animal id", animal.getId(), is(ANIMAL_ID));
+        assertThat("The name of the animal", animal.getName(), is(ANIMAL_NAME));
     }
 }

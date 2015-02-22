@@ -1,6 +1,7 @@
 package com.kadmandu.petme.domain.entity;
 
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 
 /**
@@ -11,8 +12,10 @@ import lombok.Setter;
 public class Animal {
     @Getter
     @Setter
+    @NonNull
     private String id;
     @Getter
     @Setter
+    @NonNull
     private String name;
 }

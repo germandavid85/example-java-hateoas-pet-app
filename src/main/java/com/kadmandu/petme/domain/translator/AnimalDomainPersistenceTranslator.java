@@ -11,7 +11,8 @@ import com.kadmandu.petme.repository.entity.AnimalRepository;
  * @author German Potes
  */
 @Component
-public class AnimalDomainPersistenceTranslator implements Translator<Animal, AnimalRepository>{
+public class AnimalDomainPersistenceTranslator implements
+        Translator<Animal, AnimalRepository> {
 
     @Override
     public Animal translateFrom(final AnimalRepository animalRepository) {

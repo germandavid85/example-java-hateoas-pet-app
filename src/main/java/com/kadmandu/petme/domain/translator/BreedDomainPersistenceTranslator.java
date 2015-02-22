@@ -12,13 +12,14 @@ import com.kadmandu.petme.repository.entity.BreedRepository;
  * @author German Potes
  */
 @Component
-public class BreedDomainPersistenceTranslator implements Translator<Breed, BreedRepository>{
+public class BreedDomainPersistenceTranslator implements
+        Translator<Breed, BreedRepository> {
 
     private final AnimalDomainPersistenceTranslator animalTranslator;
 
     @Autowired
     public BreedDomainPersistenceTranslator(
-        final AnimalDomainPersistenceTranslator animalTranslator) {
+            final AnimalDomainPersistenceTranslator animalTranslator) {
         this.animalTranslator = animalTranslator;
     }
 
@@ -27,7 +28,8 @@ public class BreedDomainPersistenceTranslator implements Translator<Breed, Breed
         final Breed breed = new Breed();
         breed.setId(breedRepository.getId());
         breed.setName(breedRepository.getName());
-        breed.setAnimal(animalTranslator.translateFrom(breedRepository.getAnimal()));
+        breed.setAnimal(animalTranslator.translateFrom(breedRepository
+                .getAnimal()));
 
         return breed;
     }
@@ -37,7 +39,8 @@ public class BreedDomainPersistenceTranslator implements Translator<Breed, Breed
         BreedRepository breedRepository = new BreedRepository();
         breedRepository.setId(breed.getId());
         breedRepository.setName(breed.getName());
-        breedRepository.setAnimal(animalTranslator.translateTo(breed.getAnimal()));
+        breedRepository.setAnimal(animalTranslator.translateTo(breed
+                .getAnimal()));
 
         return breedRepository;
     }

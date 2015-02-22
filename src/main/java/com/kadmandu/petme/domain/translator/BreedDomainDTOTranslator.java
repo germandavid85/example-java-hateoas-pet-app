@@ -13,7 +13,7 @@ public class BreedDomainDTOTranslator implements Translator<Breed, BreedDTO> {
 
     @Autowired
     public BreedDomainDTOTranslator(
-        final AnimalDomainDTOTranslator animalTranslator) {
+            final AnimalDomainDTOTranslator animalTranslator) {
         this.animalTranslator = animalTranslator;
     }
 

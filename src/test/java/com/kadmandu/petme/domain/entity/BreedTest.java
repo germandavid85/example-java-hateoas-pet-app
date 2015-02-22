@@ -23,4 +23,22 @@ public class BreedTest {
         assertThat("The domain breed animal", breed.getAnimal(),
                 is(sameInstance(animal)));
     }
+
+    @Test(expected = NullPointerException.class)
+    public void testSetNullId() {
+        Breed breed = new Breed();
+        breed.setId(null);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void testSetNullName() {
+        Breed breed = new Breed();
+        breed.setName(null);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void testSetNullAnimal() {
+        Breed breed = new Breed();
+        breed.setAnimal(null);
+    }
 }
