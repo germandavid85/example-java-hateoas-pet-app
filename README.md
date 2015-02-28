@@ -4,7 +4,7 @@ Petme is a personal project, intended to be used as a tool to register all the i
 
 ## Used Technologies
 I am currently using for the backend:
-* Java 7
+* Java 8
 * Spring (boot, web, hateoas, data)
 * lombok
 * google guava
