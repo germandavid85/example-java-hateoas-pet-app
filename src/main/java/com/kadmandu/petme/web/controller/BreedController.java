@@ -21,6 +21,11 @@ import com.kadmandu.petme.web.resources.BreedResource;
 import com.kadmandu.petme.web.resources.BreedResourceAssembler;
 import com.kadmandu.petme.web.service.IBreedWebService;
 
+/**
+ * Entry rest point for animals
+ * 
+ * @author German Potes
+ */
 @RestController
 @Component
 @RequestMapping(value = "/animals/{animalid}/breeds/")
@@ -30,37 +35,39 @@ public class BreedController {
     final private BreedResourceAssembler resourceAssembler;
 
     @Autowired
-    public BreedController(
-        final IBreedWebService breedService, final BreedResourceAssembler resourceAssembler) {
+    public BreedController(final IBreedWebService breedService,
+            final BreedResourceAssembler resourceAssembler) {
         super();
         this.breedService = breedService;
         this.resourceAssembler = resourceAssembler;
     }
 
     public @ResponseBody ResponseEntity<List<BreedResource>> getAllBreeds(
-        @PathVariable(value = "animalid") final String animalId) {
+            @PathVariable(value = "animalid") final String animalId) {
         final AnimalDTO animalDto = new AnimalDTO();
         animalDto.setId(animalId);
         final List<BreedDTO> breedsDto = breedService.getByAnimal(animalDto);
-        final List<BreedResource> breedResources = new ArrayList<BreedResource>(breedsDto.size());
+        final List<BreedResource> breedResources = new ArrayList<BreedResource>(
+                breedsDto.size());
 
-        for (BreedDTO breed : breedsDto) {
-            breedResources.add(resourceAssembler.toResource(breed));
-        }
+        breedsDto.stream().forEach(
+                (breed) -> breedResources.add(resourceAssembler
+                        .toResource(breed)));
 
-        return new ResponseEntity<List<BreedResource>>(breedResources, HttpStatus.OK);
+        return new ResponseEntity<List<BreedResource>>(breedResources,
+                HttpStatus.OK);
     }
 
     public @ResponseBody ResponseEntity<?> createBreed(
-        @PathVariable(value = "animalid") final String animalId,
-        @RequestBody final BreedDTO breedDto) {
+            @PathVariable(value = "animalid") final String animalId,
+            @RequestBody final BreedDTO breedDto) {
         final AnimalDTO animalDto = new AnimalDTO();
         animalDto.setId(animalId);
         breedDto.setAnimalDto(animalDto);
         final BreedDTO createdBreed = breedService.create(breedDto);
 
-        final String resourceUri =
-            resourceAssembler.toResource(createdBreed).getLink("self").toString();
+        final String resourceUri = resourceAssembler.toResource(createdBreed)
+                .getLink("self").toString();
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setLocation(URI.create(resourceUri));
         return new ResponseEntity<>(null, httpHeaders, HttpStatus.CREATED);
