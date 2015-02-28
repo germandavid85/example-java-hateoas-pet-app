@@ -18,9 +18,5 @@ public class Breed {
     @Setter
     @NonNull
     private String name;
-    @Getter
-    @Setter
-    @NonNull
-    private Animal animal;
 
 }

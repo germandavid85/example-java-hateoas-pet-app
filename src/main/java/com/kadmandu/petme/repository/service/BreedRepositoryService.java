@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.kadmandu.petme.repository.entity.AnimalRepository;
 import com.kadmandu.petme.repository.entity.BreedRepository;
 
 /**
@@ -53,11 +52,6 @@ public class BreedRepositoryService implements IBreedRepositoryService {
     @Override
     public void delete(final BreedRepository entity) {
         breedPersistence.delete(entity);
-    }
-
-    @Override
-    public List<BreedRepository> getByAnimal(final AnimalRepository animalRepository) {
-        return breedPersistence.findByAnimal(animalRepository);
     }
 
 }

@@ -1,8 +1,6 @@
 package com.kadmandu.petme.web.controller;
 
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -17,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kadmandu.petme.web.entity.AnimalDTO;
 import com.kadmandu.petme.web.entity.BreedDTO;
-import com.kadmandu.petme.web.resources.BreedResource;
 import com.kadmandu.petme.web.resources.BreedResourceAssembler;
 import com.kadmandu.petme.web.service.IBreedWebService;
 
@@ -28,7 +25,7 @@ import com.kadmandu.petme.web.service.IBreedWebService;
  */
 @RestController
 @Component
-@RequestMapping(value = "/animals/{animalid}/breeds/")
+@RequestMapping(value = "/animals/{animalid}/breed/")
 public class BreedController {
 
     final private IBreedWebService breedService;
@@ -42,28 +39,27 @@ public class BreedController {
         this.resourceAssembler = resourceAssembler;
     }
 
-    public @ResponseBody ResponseEntity<List<BreedResource>> getAllBreeds(
-            @PathVariable(value = "animalid") final String animalId) {
-        final AnimalDTO animalDto = new AnimalDTO();
-        animalDto.setId(animalId);
-        final List<BreedDTO> breedsDto = breedService.getByAnimal(animalDto);
-        final List<BreedResource> breedResources = new ArrayList<BreedResource>(
-                breedsDto.size());
-
-        breedsDto.stream().forEach(
-                (breed) -> breedResources.add(resourceAssembler
-                        .toResource(breed)));
-
-        return new ResponseEntity<List<BreedResource>>(breedResources,
-                HttpStatus.OK);
-    }
+//    public @ResponseBody ResponseEntity<List<BreedResource>> getAllBreeds(
+//            @PathVariable(value = "animalid") final String animalId) {
+//        final AnimalDTO animalDto = new AnimalDTO();
+//        animalDto.setId(animalId);
+//        final List<BreedDTO> breedsDto = breedService.getByAnimal(animalDto);
+//        final List<BreedResource> breedResources = new ArrayList<BreedResource>(
+//                breedsDto.size());
+//
+//        breedsDto.stream().forEach(
+//                (breed) -> breedResources.add(resourceAssembler
+//                        .toResource(breed)));
+//
+//        return new ResponseEntity<List<BreedResource>>(breedResources,
+//                HttpStatus.OK);
+//    }
 
     public @ResponseBody ResponseEntity<?> createBreed(
             @PathVariable(value = "animalid") final String animalId,
             @RequestBody final BreedDTO breedDto) {
         final AnimalDTO animalDto = new AnimalDTO();
         animalDto.setId(animalId);
-        breedDto.setAnimalDto(animalDto);
         final BreedDTO createdBreed = breedService.create(breedDto);
 
         final String resourceUri = resourceAssembler.toResource(createdBreed)

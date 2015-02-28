@@ -6,11 +6,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.kadmandu.petme.domain.entity.Animal;
 import com.kadmandu.petme.domain.entity.Breed;
 import com.kadmandu.petme.domain.service.IBreedDomainService;
 import com.kadmandu.petme.domain.translator.Translator;
-import com.kadmandu.petme.web.entity.AnimalDTO;
 import com.kadmandu.petme.web.entity.BreedDTO;
 
 /**
@@ -23,15 +21,12 @@ public class BreedWebService implements IBreedWebService {
 
     final private IBreedDomainService breedDomainService;
     final private Translator<Breed, BreedDTO> breedTranslator;
-    final private Translator<Animal, AnimalDTO> animalTranslator;
 
     @Autowired
     public BreedWebService(final IBreedDomainService breedDomainService,
-            final Translator<Breed, BreedDTO> breedTranslator,
-            final Translator<Animal, AnimalDTO> animalTranslator) {
+            final Translator<Breed, BreedDTO> breedTranslator) {
         this.breedDomainService = breedDomainService;
         this.breedTranslator = breedTranslator;
-        this.animalTranslator = animalTranslator;
     }
 
     @Override
@@ -73,19 +68,6 @@ public class BreedWebService implements IBreedWebService {
     public void delete(final BreedDTO entity) {
         final Breed breed = breedTranslator.translateFrom(entity);
         breedDomainService.delete(breed);
-    }
-
-    @Override
-    public List<BreedDTO> getByAnimal(final AnimalDTO animalDto) {
-        final Animal animalDomain = animalTranslator.translateFrom(animalDto);
-        List<Breed> breedsDomain = breedDomainService.getByAnimal(animalDomain);
-        final List<BreedDTO> breeds = new ArrayList<BreedDTO>(
-                breedsDomain.size());
-
-        breedsDomain.stream().forEach(
-                (breed) -> breeds.add(breedTranslator.translateTo(breed)));
-
-        return breeds;
     }
 
 }

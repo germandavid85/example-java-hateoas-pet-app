@@ -13,6 +13,4 @@ public class BreedDTO {
     private String id;
     @Getter @Setter
     private String name;
-    @Getter @Setter
-    private AnimalDTO animalDto;
 }

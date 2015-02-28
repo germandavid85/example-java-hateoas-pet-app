@@ -89,15 +89,4 @@ public class BreedRepositoryServiceTest {
         verify(mockBreedPersistence).delete(breed1);
     }
 
-    @Test
-    public void testGetByAnimal() {
-        AnimalRepository animal = new AnimalRepository();
-
-        List<BreedRepository> breeds = Collections.singletonList(breed1);
-        when(mockBreedPersistence.findByAnimal(animal)).thenReturn(breeds);
-
-        testService.getByAnimal(animal);
-        verify(mockBreedPersistence).findByAnimal(animal);
-    }
-
 }

@@ -6,11 +6,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.kadmandu.petme.domain.entity.Animal;
 import com.kadmandu.petme.domain.entity.Breed;
 import com.kadmandu.petme.domain.translator.AnimalDomainPersistenceTranslator;
 import com.kadmandu.petme.domain.translator.BreedDomainPersistenceTranslator;
-import com.kadmandu.petme.repository.entity.AnimalRepository;
 import com.kadmandu.petme.repository.entity.BreedRepository;
 import com.kadmandu.petme.repository.service.IBreedRepositoryService;
 
@@ -88,19 +86,5 @@ public class BreedDomainService implements IBreedDomainService {
         final BreedRepository breedRepository = breedTranslator
                 .translateTo(entity);
         breedRepositoryService.delete(breedRepository);
-    }
-
-    @Override
-    public List<Breed> getByAnimal(final Animal animal) {
-        final AnimalRepository animalRepository = animalTranslator
-                .translateTo(animal);
-        final List<BreedRepository> breedsRepo = breedRepositoryService
-                .getByAnimal(animalRepository);
-        final List<Breed> breeds = new ArrayList<Breed>(breedsRepo.size());
-
-        for (BreedRepository breedRepository : breedsRepo) {
-            breeds.add(breedTranslator.translateFrom(breedRepository));
-        }
-        return breeds;
     }
 }

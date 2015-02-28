@@ -1,5 +1,7 @@
 package com.kadmandu.petme.domain.entity;
 
+import java.util.List;
+
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
@@ -18,4 +20,7 @@ public class Animal {
     @Setter
     @NonNull
     private String name;
+    @Getter
+    @Setter
+    private List<Breed> breeds;
 }
