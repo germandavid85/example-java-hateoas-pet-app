@@ -20,12 +20,15 @@ public class AnimalDomainPersistenceTranslatorTest {
     private final static String ANIMAL_NAME = "Dog";
 
     private AnimalDomainPersistenceTranslator testAnimalTranslator;
+    private BreedDomainPersistenceTranslator breedTranslator;
     private Animal animal;
     private AnimalRepository animalRepo;
 
     @Before
     public void setUp() {
-        testAnimalTranslator = new AnimalDomainPersistenceTranslator();
+        breedTranslator = new BreedDomainPersistenceTranslator();
+        testAnimalTranslator = new AnimalDomainPersistenceTranslator(
+                breedTranslator);
         animal = new Animal();
         animal.setId(ANIMAL_ID);
         animal.setName(ANIMAL_NAME);

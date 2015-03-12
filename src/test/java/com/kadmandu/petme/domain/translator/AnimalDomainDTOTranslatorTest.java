@@ -20,12 +20,14 @@ public class AnimalDomainDTOTranslatorTest {
     private final static String ANIMAL_NAME = "Dog";
 
     private AnimalDomainDTOTranslator testAnimalTranslator;
+    private BreedDomainDTOTranslator breedTranslator;
     private Animal animal;
     private AnimalDTO animalDto;
 
     @Before
     public void setUp() {
-        testAnimalTranslator = new AnimalDomainDTOTranslator();
+        breedTranslator = new BreedDomainDTOTranslator();
+        testAnimalTranslator = new AnimalDomainDTOTranslator(breedTranslator);
         animal = new Animal();
         animal.setId(ANIMAL_ID);
         animal.setName(ANIMAL_NAME);

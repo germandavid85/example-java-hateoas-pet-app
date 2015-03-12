@@ -9,7 +9,7 @@ import com.kadmandu.petme.web.entity.BreedDTO;
 public class BreedDomainDTOTranslator implements Translator<Breed, BreedDTO> {
 
     @Override
-    public Breed translateFrom(BreedDTO breedDto) {
+    public Breed translateFrom(final BreedDTO breedDto) {
         final Breed breed = new Breed();
         breed.setId(breedDto.getId());
         breed.setName(breedDto.getName());
@@ -18,7 +18,7 @@ public class BreedDomainDTOTranslator implements Translator<Breed, BreedDTO> {
     }
 
     @Override
-    public BreedDTO translateTo(Breed breed) {
+    public BreedDTO translateTo(final Breed breed) {
         BreedDTO breedDto = new BreedDTO();
         breedDto.setId(breed.getId());
         breedDto.setName(breed.getName());

@@ -18,6 +18,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import com.kadmandu.petme.domain.entity.Animal;
 import com.kadmandu.petme.domain.translator.AnimalDomainPersistenceTranslator;
+import com.kadmandu.petme.domain.translator.BreedDomainPersistenceTranslator;
 import com.kadmandu.petme.repository.entity.AnimalRepository;
 import com.kadmandu.petme.repository.service.IAnimalRepositoryService;
 
@@ -33,13 +34,15 @@ public class AnimalDomainServiceTest {
     private ArgumentCaptor<AnimalRepository> animalCaptor;
 
     private AnimalDomainPersistenceTranslator animalDomPerTranslator;
+    private BreedDomainPersistenceTranslator breedDomPerTranslator;
     private AnimalRepository animalRepo;
 
     private AnimalDomainService testService;
 
     @Before
     public void setUp() {
-        animalDomPerTranslator = new AnimalDomainPersistenceTranslator();
+        breedDomPerTranslator= new BreedDomainPersistenceTranslator();
+        animalDomPerTranslator = new AnimalDomainPersistenceTranslator(breedDomPerTranslator);
         testService = new AnimalDomainService(mockAnimalRepoService,
                 animalDomPerTranslator);
         animalRepo = new AnimalRepository();

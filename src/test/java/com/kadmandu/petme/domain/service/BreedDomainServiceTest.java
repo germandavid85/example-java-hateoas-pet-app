@@ -50,8 +50,8 @@ public class BreedDomainServiceTest {
 
     @Before
     public void setUp() {
-        animalDomPerTranslator = new AnimalDomainPersistenceTranslator();
         breedDomPerTranslator = new BreedDomainPersistenceTranslator();
+        animalDomPerTranslator = new AnimalDomainPersistenceTranslator(breedDomPerTranslator);
         testService = new BreedDomainService(mockBreedRepoService,
                 breedDomPerTranslator, animalDomPerTranslator);
         breedRepo = new BreedRepository();
