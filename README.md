@@ -7,7 +7,7 @@ I am currently using for the backend:
 * Java 8
 * Spring (boot, web, hateoas, data)
 * lombok
-* google guava
+* Google guava
 * Junit
 * mockito
 * mongodb
