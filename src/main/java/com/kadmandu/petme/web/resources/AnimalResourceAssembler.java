@@ -15,8 +15,9 @@ public class AnimalResourceAssembler implements ResourceAssembler<AnimalDTO, Ani
     @Override
     public AnimalResource toResource(final AnimalDTO animalDto) {
         final AnimalResource animalResource = new AnimalResource(animalDto);
-        animalResource.add(
-            linkTo(methodOn(AnimalController.class).getAnimal(animalDto.getId())).withSelfRel());
+        animalResource.add(linkTo(
+                methodOn(AnimalController.class).getAnimal(animalDto.getId()))
+                .withSelfRel());
         return animalResource;
     }
 

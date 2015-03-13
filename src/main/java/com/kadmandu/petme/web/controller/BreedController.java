@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,7 +30,7 @@ import com.kadmandu.petme.web.service.IBreedWebService;
  */
 @RestController
 @Component
-@RequestMapping(value = "/animals/{animalid}/breed/")
+@RequestMapping(value = "/animals/{animalid}/breeds")
 public class BreedController {
 
     final private IBreedWebService breedService;
@@ -45,12 +46,14 @@ public class BreedController {
         this.animalService = animalService;
     }
 
+    @RequestMapping(method = RequestMethod.GET, produces = "application/json")
     public @ResponseBody ResponseEntity<List<BreedResource>> getAllBreeds(
             @PathVariable(value = "animalid") final String animalId) {
-        final List<BreedDTO> breedsDto = animalService.getOne(animalId).getBreeds();
-        final List<BreedResource> breedResources = new ArrayList<BreedResource>(
+        List<BreedDTO> breedsDto = animalService.getOne(animalId).getBreeds();
+        List<BreedResource> breedResources = new ArrayList<BreedResource>(
                 breedsDto.size());
 
+        resourceAssembler.setAnimalId(animalId);
         breedsDto.stream().forEach(
                 (breed) -> breedResources.add(resourceAssembler
                         .toResource(breed)));
@@ -59,14 +62,27 @@ public class BreedController {
                 HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/{breedid}", method = RequestMethod.GET, produces = "application/json")
+    public @ResponseBody ResponseEntity<BreedResource> getBreed(
+            @PathVariable(value = "animalid") final String animalId,
+            @PathVariable(value = "breedid") final String breedId) {
+        BreedDTO animalResponse = breedService.getOne(breedId);
+        resourceAssembler.setAnimalId(animalId);
+        BreedResource resource = resourceAssembler.toResource(animalResponse);
+
+        return new ResponseEntity<BreedResource>(resource, HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     public @ResponseBody ResponseEntity<?> createBreed(
             @PathVariable(value = "animalid") final String animalId,
             @RequestBody final BreedDTO breedDto) {
-        final AnimalDTO animalDto = new AnimalDTO();
+        AnimalDTO animalDto = new AnimalDTO();
         animalDto.setId(animalId);
-        final BreedDTO createdBreed = breedService.create(breedDto);
+        BreedDTO createdBreed = breedService.create(breedDto);
 
-        final String resourceUri = resourceAssembler.toResource(createdBreed)
+        resourceAssembler.setAnimalId(animalId);
+        String resourceUri = resourceAssembler.toResource(createdBreed)
                 .getLink("self").toString();
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setLocation(URI.create(resourceUri));
