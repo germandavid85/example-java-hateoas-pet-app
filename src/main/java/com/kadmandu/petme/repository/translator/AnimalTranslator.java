@@ -1,4 +1,4 @@
-package com.kadmandu.petme.domain.translator;
+package com.kadmandu.petme.repository.translator;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,19 +9,23 @@ import org.springframework.stereotype.Component;
 
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
-import com.kadmandu.petme.domain.entity.Animal;
-import com.kadmandu.petme.domain.entity.Breed;
+import com.kadmandu.petme.repository.entity.Animal;
+import com.kadmandu.petme.repository.entity.Breed;
 import com.kadmandu.petme.web.entity.AnimalDTO;
 import com.kadmandu.petme.web.entity.BreedDTO;
 
+/**
+ * Translator class for animal object between dto and persistence
+ * 
+ * @author German Potes
+ */
 @Component
-public class AnimalDomainDTOTranslator implements Translator<Animal, AnimalDTO> {
+public class AnimalTranslator implements Translator<Animal, AnimalDTO> {
 
-    private final BreedDomainDTOTranslator breedTranslator;
+    private final BreedTranslator breedTranslator;
 
     @Autowired
-    public AnimalDomainDTOTranslator(
-            final BreedDomainDTOTranslator breedTranslator) {
+    public AnimalTranslator(final BreedTranslator breedTranslator) {
         this.breedTranslator = Preconditions.checkNotNull(breedTranslator);
     }
 

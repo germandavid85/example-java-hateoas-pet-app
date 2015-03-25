@@ -6,9 +6,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.kadmandu.petme.domain.entity.Breed;
-import com.kadmandu.petme.domain.service.IBreedDomainService;
-import com.kadmandu.petme.domain.translator.Translator;
+import com.google.common.base.Preconditions;
+import com.kadmandu.petme.repository.entity.Animal;
+import com.kadmandu.petme.repository.entity.Breed;
+import com.kadmandu.petme.repository.service.IBreedRepositoryService;
+import com.kadmandu.petme.repository.translator.Translator;
+import com.kadmandu.petme.web.entity.AnimalDTO;
 import com.kadmandu.petme.web.entity.BreedDTO;
 
 /**
@@ -17,57 +20,69 @@ import com.kadmandu.petme.web.entity.BreedDTO;
  * @author German Potes
  */
 @Component
-public class BreedWebService implements IBreedWebService {
-
-    final private IBreedDomainService breedDomainService;
-    final private Translator<Breed, BreedDTO> breedTranslator;
+public class BreedWebService implements IBreedWebService
+{
+    private final IBreedRepositoryService breedRepositoryService;
+    private final Translator<Breed, BreedDTO> breedTranslator;
+    private final Translator<Animal, AnimalDTO> animalTranslator;
 
     @Autowired
-    public BreedWebService(final IBreedDomainService breedDomainService,
-            final Translator<Breed, BreedDTO> breedTranslator) {
-        this.breedDomainService = breedDomainService;
-        this.breedTranslator = breedTranslator;
+    public BreedWebService(final IBreedRepositoryService breedRepositoryService,
+        final Translator<Breed, BreedDTO> breedTranslator,
+        final Translator<Animal, AnimalDTO> animalTranslator)
+    {
+        this.breedRepositoryService = Preconditions.checkNotNull(breedRepositoryService,
+            "breedRepositoryService must be not null");
+        this.breedTranslator = Preconditions.checkNotNull(breedTranslator,
+            "breedTranslator must be not null");
+        this.animalTranslator = Preconditions.checkNotNull(animalTranslator,
+            "animalTranslator must be not null");
     }
 
     @Override
-    public List<BreedDTO> getAll() {
-        List<Breed> breedsDomain = breedDomainService.getAll();
-        final List<BreedDTO> breeds = new ArrayList<BreedDTO>(
-                breedsDomain.size());
+    public List<BreedDTO> getAll()
+    {
+        List<Breed> breedsDomain = breedRepositoryService.getAll();
+        final List<BreedDTO> breeds = new ArrayList<BreedDTO>(breedsDomain.size());
 
-        breedsDomain.stream().forEach(
-                (breed) -> breeds.add(breedTranslator.translateTo(breed)));
+        breedsDomain.stream().forEach((breed) -> breeds.add(breedTranslator.translateTo(breed)));
 
         return breeds;
     }
 
     @Override
-    public BreedDTO getOne(final String id) {
-        final BreedDTO breed = breedTranslator.translateTo(breedDomainService
-                .getOne(id));
+    public BreedDTO getOne(final String id)
+    {
+        final BreedDTO breed = breedTranslator.translateTo(breedRepositoryService.getOne(id));
         return breed;
     }
 
     @Override
-    public BreedDTO create(final BreedDTO entity) {
+    public BreedDTO create(final BreedDTO entity)
+    {
         final Breed breed = breedTranslator.translateFrom(entity);
-        final BreedDTO breedDto = breedTranslator
-                .translateTo(breedDomainService.create(breed));
+        final BreedDTO breedDto = breedTranslator.translateTo(breedRepositoryService.create(breed));
         return breedDto;
     }
 
     @Override
-    public BreedDTO update(final BreedDTO entity) {
+    public BreedDTO update(final BreedDTO entity)
+    {
         final Breed breed = breedTranslator.translateFrom(entity);
-        final BreedDTO breedDto = breedTranslator
-                .translateTo(breedDomainService.update(breed));
+        final BreedDTO breedDto = breedTranslator.translateTo(breedRepositoryService.update(breed));
         return breedDto;
     }
 
     @Override
-    public void delete(final BreedDTO entity) {
+    public void delete(final BreedDTO entity)
+    {
         final Breed breed = breedTranslator.translateFrom(entity);
-        breedDomainService.delete(breed);
+        breedRepositoryService.delete(breed);
     }
 
+    @Override
+    public AnimalDTO getOne(final String animalId, final String breedId)
+    {
+        return animalTranslator.translateTo(breedRepositoryService.getOne(animalId, breedId));
+    }
 }

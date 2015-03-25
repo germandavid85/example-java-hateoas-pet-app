@@ -1,27 +1,35 @@
 package com.kadmandu.petme.repository.entity;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertThat;
+
+import java.util.Collections;
 
 import org.junit.Test;
 
 /**
- * test class for {@link AnimalRepository}
+ * test class for {@link Animal}
  * 
  * @author German Potes
  */
-public class AnimalRepositoryTest {
+public class AnimalTest
+{
 
     @Test
-    public void testGetSetValues() {
-        AnimalRepository repository = new AnimalRepository();
+    public void testGetSetValues()
+    {
+        Animal repository = new Animal();
 
         final String id = "id123";
         final String name = "Dog";
         repository.setId(id);
         repository.setName(name);
+        Breed breed = new Breed();
+        repository.setBreeds(Collections.singletonList(breed));
 
         assertThat("wrong assigned id", repository.getId(), is(id));
         assertThat("wrong assigned name", repository.getName(), is(name));
+        assertThat("wrong assigned breed", repository.getBreeds().get(0), is(sameInstance(breed)));
     }
 }

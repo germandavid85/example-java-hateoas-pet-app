@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.kadmandu.petme.repository.entity.AnimalRepository;
+import com.kadmandu.petme.repository.entity.Animal;
 
 /**
  * Operations available to be performed at the persistence level for animals.
@@ -17,7 +17,7 @@ import com.kadmandu.petme.repository.entity.AnimalRepository;
 @Transactional
 public class AnimalRepositoryService implements IAnimalRepositoryService {
 
-    private final AnimalPersistence animalPersistence;
+    private final AnimalRepository animalPersistence;
 
     /**
      * Service constructor
@@ -25,32 +25,32 @@ public class AnimalRepositoryService implements IAnimalRepositoryService {
      * @param animalPersistence the persistence data access, injected by spring
      */
     @Autowired
-    public AnimalRepositoryService(AnimalPersistence animalPersistence) {
+    public AnimalRepositoryService(AnimalRepository animalPersistence) {
         this.animalPersistence = animalPersistence;
     }
 
     @Override
-    public List<AnimalRepository> getAll() {
+    public List<Animal> getAll() {
         return animalPersistence.findAll();
     }
 
     @Override
-    public AnimalRepository getOne(final String id) {
+    public Animal getOne(final String id) {
         return animalPersistence.findOne(id);
     }
 
     @Override
-    public AnimalRepository create(final AnimalRepository entity) {
+    public Animal create(final Animal entity) {
         return animalPersistence.save(entity);
     }
 
     @Override
-    public AnimalRepository update(final AnimalRepository entity) {
+    public Animal update(final Animal entity) {
         return animalPersistence.save(entity);
     }
 
     @Override
-    public void delete(final AnimalRepository entity) {
+    public void delete(final Animal entity) {
         animalPersistence.delete(entity);
     }
 }

@@ -16,7 +16,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import com.kadmandu.petme.repository.entity.AnimalRepository;
+import com.kadmandu.petme.repository.entity.Animal;
 
 /**
  * test class for {@link AnimalRepositoryService}
@@ -31,13 +31,13 @@ public class AnimalRepositoryServiceTest {
     private static final String ANIMAL_NAME = "Dog";
 
     @Mock
-    private AnimalPersistence mockAnimalPeristence;
+    private AnimalRepository mockAnimalPeristence;
     private AnimalRepositoryService testService;
-    private AnimalRepository animal1;
+    private Animal animal1;
 
     @Before
     public void setUp() {
-        animal1 = new AnimalRepository();
+        animal1 = new Animal();
         animal1.setId(ANIMAL_ID);
         animal1.setName(ANIMAL_NAME);
 
@@ -48,7 +48,7 @@ public class AnimalRepositoryServiceTest {
     public void testGetAll() {
         when(mockAnimalPeristence.findAll()).thenReturn(
                 Collections.singletonList(animal1));
-        List<AnimalRepository> animals = testService.getAll();
+        List<Animal> animals = testService.getAll();
         assertThat("The size of animals", animals.size(), is(1));
         assertThat("The id of the animal", animals.get(0).getId(),
                 is(ANIMAL_ID));
@@ -57,14 +57,14 @@ public class AnimalRepositoryServiceTest {
     @Test
     public void testGetOne() {
         when(mockAnimalPeristence.findOne(ANIMAL_ID)).thenReturn(animal1);
-        AnimalRepository animal = testService.getOne(ANIMAL_ID);
+        Animal animal = testService.getOne(ANIMAL_ID);
         assertThat("The id of the animal", animal.getId(), is(ANIMAL_ID));
         assertThat("The id of the animal", animal.getName(), is(ANIMAL_NAME));
     }
 
     @Test
     public void testCreate() {
-        AnimalRepository returnedAnimal = new AnimalRepository();
+        Animal returnedAnimal = new Animal();
         when(mockAnimalPeristence.save(animal1)).thenReturn(returnedAnimal);
 
         assertThat("The returned animal", testService.create(animal1),
@@ -74,7 +74,7 @@ public class AnimalRepositoryServiceTest {
 
     @Test
     public void testUpdate() {
-        AnimalRepository returnedAnimal = new AnimalRepository();
+        Animal returnedAnimal = new Animal();
         when(mockAnimalPeristence.save(animal1)).thenReturn(returnedAnimal);
 
         assertThat("The returned animal", testService.update(animal1),

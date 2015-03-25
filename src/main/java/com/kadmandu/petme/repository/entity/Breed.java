@@ -8,7 +8,7 @@ import lombok.Setter;
  * 
  * @author German Potes
  */
-public class BreedRepository {
+public class Breed {
     @Getter @Setter
     private String id;
     @Getter @Setter

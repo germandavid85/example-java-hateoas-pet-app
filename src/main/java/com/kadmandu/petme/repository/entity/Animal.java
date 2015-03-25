@@ -14,7 +14,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * @author German Potes
  */
 @Document
-public class AnimalRepository {
+public class Animal {
     @Getter
     @Setter
     @Id
@@ -24,5 +24,5 @@ public class AnimalRepository {
     private String name;
     @Getter
     @Setter
-    private List<BreedRepository> breeds;
+    private List<Breed> breeds;
 }

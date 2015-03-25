@@ -1,12 +1,17 @@
-package com.kadmandu.petme.domain.translator;
+package com.kadmandu.petme.repository.translator;
 
 import org.springframework.stereotype.Component;
 
-import com.kadmandu.petme.domain.entity.Breed;
+import com.kadmandu.petme.repository.entity.Breed;
 import com.kadmandu.petme.web.entity.BreedDTO;
 
+/**
+ * Translator class for breed object between dto and persistence
+ * 
+ * @author German Potes
+ */
 @Component
-public class BreedDomainDTOTranslator implements Translator<Breed, BreedDTO> {
+public class BreedTranslator implements Translator<Breed, BreedDTO> {
 
     @Override
     public Breed translateFrom(final BreedDTO breedDto) {

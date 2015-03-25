@@ -6,7 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.kadmandu.petme.repository.entity.BreedRepository;
+import com.kadmandu.petme.repository.entity.Animal;
+import com.kadmandu.petme.repository.entity.Breed;
 
 /**
  * Operations available to be performed at the persistence level for breeds.
@@ -17,7 +18,8 @@ import com.kadmandu.petme.repository.entity.BreedRepository;
 @Transactional
 public class BreedRepositoryService implements IBreedRepositoryService {
 
-    private final BreedPersistence breedPersistence;
+    private final BreedRepository breedPersistence;
+    private final AnimalRepository animalPersistence;
 
     /**
      * Service constructor
@@ -25,33 +27,40 @@ public class BreedRepositoryService implements IBreedRepositoryService {
      * @param breedPersistence the persistence data access, injected by spring
      */
     @Autowired
-    public BreedRepositoryService(final BreedPersistence breedPersistence) {
+    public BreedRepositoryService(final BreedRepository breedPersistence,
+            final AnimalRepository animalPersistence) {
         this.breedPersistence = breedPersistence;
+        this.animalPersistence = animalPersistence;
     }
 
     @Override
-    public List<BreedRepository> getAll() {
+    public List<Breed> getAll() {
         return breedPersistence.findAll();
     }
 
     @Override
-    public BreedRepository getOne(final String id) {
+    public Breed getOne(final String id) {
         return breedPersistence.findOne(id);
     }
 
     @Override
-    public BreedRepository create(final BreedRepository entity) {
+    public Breed create(final Breed entity) {
         return breedPersistence.save(entity);
     }
 
     @Override
-    public BreedRepository update(final BreedRepository entity) {
+    public Breed update(final Breed entity) {
         return breedPersistence.save(entity);
     }
 
     @Override
-    public void delete(final BreedRepository entity) {
+    public void delete(final Breed entity) {
         breedPersistence.delete(entity);
+    }
+
+    @Override
+    public Animal getOne(String animalId, String breedId) {
+        return animalPersistence.getBreedsCustomMethod(animalId, breedId);
     }
 
 }

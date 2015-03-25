@@ -6,15 +6,16 @@ import static org.junit.Assert.assertThat;
 import org.junit.Test;
 
 /**
- * test class for {@link BreedRepository}
+ * test class for {@link Breed}
  * 
  * @author German Potes
  */
-public class BreedRepositoryTest {
-
+public class BreedTest
+{
     @Test
-    public void testGetSetValues() {
-        BreedRepository breedRepo = new BreedRepository();
+    public void testGetSetValues()
+    {
+        Breed breedRepo = new Breed();
 
         final String id = "id123";
         final String name = "Dog";
