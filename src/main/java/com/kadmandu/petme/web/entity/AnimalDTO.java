@@ -11,7 +11,7 @@ import lombok.Setter;
  */
 public class AnimalDTO {
     @Getter @Setter
-    private String id;
+    private String animalId;
     @Getter @Setter
     private String name;
     @Getter @Setter

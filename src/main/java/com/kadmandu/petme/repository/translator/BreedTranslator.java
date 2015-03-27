@@ -11,21 +11,24 @@ import com.kadmandu.petme.web.entity.BreedDTO;
  * @author German Potes
  */
 @Component
-public class BreedTranslator implements Translator<Breed, BreedDTO> {
+public class BreedTranslator implements Translator<Breed, BreedDTO>
+{
 
     @Override
-    public Breed translateFrom(final BreedDTO breedDto) {
+    public Breed translateFrom(final BreedDTO breedDto)
+    {
         final Breed breed = new Breed();
-        breed.setId(breedDto.getId());
+        breed.setBreedId(breedDto.getBreedId());
         breed.setName(breedDto.getName());
 
         return breed;
     }
 
     @Override
-    public BreedDTO translateTo(final Breed breed) {
+    public BreedDTO translateTo(final Breed breed)
+    {
         BreedDTO breedDto = new BreedDTO();
-        breedDto.setId(breed.getId());
+        breedDto.setBreedId(breed.getBreedId());
         breedDto.setName(breed.getName());
 
         return breedDto;

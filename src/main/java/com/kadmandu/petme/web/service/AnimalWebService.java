@@ -45,10 +45,10 @@ public class AnimalWebService implements IAnimalWebService
     }
 
     @Override
-    public AnimalDTO getOne(final String id)
+    public AnimalDTO getOne(final String animalId)
     {
         final AnimalDTO animalDto = animalTranslator
-            .translateTo(animalRepositoryService.getOne(id));
+            .translateTo(animalRepositoryService.getOne(animalId));
         return animalDto;
     }
 

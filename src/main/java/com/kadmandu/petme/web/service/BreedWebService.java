@@ -51,26 +51,23 @@ public class BreedWebService implements IBreedWebService
     }
 
     @Override
-    public BreedDTO getOne(final String id)
+    public BreedDTO getOne(final String breedId)
     {
-        final BreedDTO breed = breedTranslator.translateTo(breedRepositoryService.getOne(id));
-        return breed;
+        return breedTranslator.translateTo(breedRepositoryService.getOne(breedId));
     }
 
     @Override
     public BreedDTO create(final BreedDTO entity)
     {
         final Breed breed = breedTranslator.translateFrom(entity);
-        final BreedDTO breedDto = breedTranslator.translateTo(breedRepositoryService.create(breed));
-        return breedDto;
+        return breedTranslator.translateTo(breedRepositoryService.create(breed));
     }
 
     @Override
     public BreedDTO update(final BreedDTO entity)
     {
         final Breed breed = breedTranslator.translateFrom(entity);
-        final BreedDTO breedDto = breedTranslator.translateTo(breedRepositoryService.update(breed));
-        return breedDto;
+        return breedTranslator.translateTo(breedRepositoryService.update(breed));
     }
 
     @Override

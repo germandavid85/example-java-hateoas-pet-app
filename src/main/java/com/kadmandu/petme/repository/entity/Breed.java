@@ -10,7 +10,7 @@ import lombok.Setter;
  */
 public class Breed {
     @Getter @Setter
-    private String id;
+    private String breedId;
     @Getter @Setter
     private String name;
 }

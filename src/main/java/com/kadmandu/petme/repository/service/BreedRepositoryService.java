@@ -39,8 +39,8 @@ public class BreedRepositoryService implements IBreedRepositoryService {
     }
 
     @Override
-    public Breed getOne(final String id) {
-        return breedPersistence.findOne(id);
+    public Breed getOne(final String breedId) {
+        return breedPersistence.findOne(breedId);
     }
 
     @Override

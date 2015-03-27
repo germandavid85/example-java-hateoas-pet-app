@@ -17,6 +17,11 @@ apply plugin: 'jacoco'
 apply plugin: 'findbugs'
 apply plugin: 'pmd'
 
+pmd {
+    ignoreFailures = false
+    ruleSetFiles = files("config/pmd/ruleset.xml")
+}
+
 jar {
     baseName = 'pet-me'
     version =  '0.1.0'

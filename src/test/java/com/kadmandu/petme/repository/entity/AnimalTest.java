@@ -23,12 +23,12 @@ public class AnimalTest
 
         final String id = "id123";
         final String name = "Dog";
-        repository.setId(id);
+        repository.setAnimalId(id);
         repository.setName(name);
         Breed breed = new Breed();
         repository.setBreeds(Collections.singletonList(breed));
 
-        assertThat("wrong assigned id", repository.getId(), is(id));
+        assertThat("wrong assigned id", repository.getAnimalId(), is(id));
         assertThat("wrong assigned name", repository.getName(), is(name));
         assertThat("wrong assigned breed", repository.getBreeds().get(0), is(sameInstance(breed)));
     }

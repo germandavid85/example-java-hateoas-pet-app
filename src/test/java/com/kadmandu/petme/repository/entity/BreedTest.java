@@ -19,10 +19,10 @@ public class BreedTest
 
         final String id = "id123";
         final String name = "Dog";
-        breedRepo.setId(id);
+        breedRepo.setBreedId(id);
         breedRepo.setName(name);
 
-        assertThat("The id of the breed", breedRepo.getId(), is(id));
+        assertThat("The id of the breed", breedRepo.getBreedId(), is(id));
         assertThat("The name of the breed", breedRepo.getName(), is(name));
     }
 }

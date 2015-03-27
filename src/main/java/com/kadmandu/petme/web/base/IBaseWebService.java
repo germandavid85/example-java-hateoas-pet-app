@@ -13,11 +13,11 @@ public interface IBaseWebService<T> {
     /**
      * Retrieves one DTO entity by its id
      * 
-     * @param id the id of the DTO entity to search for
+     * @param entityId the id of the DTO entity to search for
      * 
      * @return the matched domain entity
      */
-    T getOne(String id);
+    T getOne(String entityId);
 
     /**
      * Creates a new DTO entity in the data source.

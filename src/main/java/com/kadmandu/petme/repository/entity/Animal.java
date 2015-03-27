@@ -18,7 +18,7 @@ public class Animal {
     @Getter
     @Setter
     @Id
-    private String id;
+    private String animalId;
     @Getter
     @Setter
     private String name;

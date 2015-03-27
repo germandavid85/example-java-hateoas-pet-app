@@ -35,8 +35,8 @@ public class AnimalRepositoryService implements IAnimalRepositoryService {
     }
 
     @Override
-    public Animal getOne(final String id) {
-        return animalPersistence.findOne(id);
+    public Animal getOne(final String animalId) {
+        return animalPersistence.findOne(animalId);
     }
 
     @Override

@@ -12,20 +12,21 @@ import com.kadmandu.petme.web.controller.BreedController;
 import com.kadmandu.petme.web.entity.BreedDTO;
 
 @Component
-public class BreedResourceAssembler implements
-        ResourceAssembler<BreedDTO, BreedResource> {
+public class BreedResourceAssembler implements ResourceAssembler<BreedDTO, BreedResource>
+{
 
     @Setter
     private String animalId;
 
     @Override
-    public BreedResource toResource(final BreedDTO breedDto) {
+    public BreedResource toResource(final BreedDTO breedDto)
+    {
         Preconditions.checkNotNull(animalId);
 
         final BreedResource breedResource = new BreedResource(breedDto);
         breedResource.add(linkTo(
-                methodOn(BreedController.class).getBreed(animalId,
-                        breedDto.getId())).withSelfRel());
+            methodOn(BreedController.class).getBreed(animalId, breedDto.getBreedId()))
+            .withSelfRel());
         return breedResource;
     }
 

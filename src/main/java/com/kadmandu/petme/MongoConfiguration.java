@@ -19,7 +19,7 @@ public class MongoConfiguration extends AbstractMongoConfiguration
     /**
      * The base package to scan for persistence objects.
      */
-    static final String MAPPING_BASE_PACKAGE = "com.kadmandu.petme.repository";
+    private static final String MAPPING_BASE_PACKAGE = "com.kadmandu.petme.repository";
 
     @Value("${spring.data.mongodb.dbname}")
     private String dbName;

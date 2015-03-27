@@ -8,20 +8,21 @@ import org.springframework.data.mongodb.core.query.Query;
 import com.google.common.base.Preconditions;
 import com.kadmandu.petme.repository.entity.Animal;
 
-public class AnimalRepositoryImpl implements AnimalRepositoryCustom {
+public class AnimalRepositoryImpl implements AnimalRepositoryCustom
+{
 
     private final MongoOperations operations;
 
     @Autowired
-    public AnimalRepositoryImpl(final MongoOperations operations) {
+    public AnimalRepositoryImpl(final MongoOperations operations)
+    {
         this.operations = Preconditions.checkNotNull(operations, "operations");
     }
 
     @Override
-    public Animal getBreedsCustomMethod(final String animalId,
-            final String breedId) {
-        Query mongoQuery = new Query(Criteria.where("id").is(animalId)
-                .and("breeds.id").is(breedId));
+    public Animal getBreedsCustomMethod(final String animalId, final String breedId)
+    {
+        Query mongoQuery = new Query(Criteria.where("id").is(animalId).and("breeds.id").is(breedId));
         mongoQuery.fields().include("breeds.$");
 
         return operations.findOne(mongoQuery, Animal.class);

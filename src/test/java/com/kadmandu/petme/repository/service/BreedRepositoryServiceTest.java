@@ -41,7 +41,7 @@ public class BreedRepositoryServiceTest
     public void setUp()
     {
         breed1 = new Breed();
-        breed1.setId(BREED_ID);
+        breed1.setBreedId(BREED_ID);
         breed1.setName(BREED_NAME);
 
         testService = new BreedRepositoryService(mockBreedRepository, mockAnimalRepository);
@@ -53,7 +53,7 @@ public class BreedRepositoryServiceTest
         when(mockBreedRepository.findAll()).thenReturn(Collections.singletonList(breed1));
         List<Breed> breeds = testService.getAll();
         assertThat("The size of breeds", breeds.size(), is(1));
-        assertThat("The id of the breed", breeds.get(0).getId(), is(BREED_ID));
+        assertThat("The id of the breed", breeds.get(0).getBreedId(), is(BREED_ID));
     }
 
     @Test
@@ -61,7 +61,7 @@ public class BreedRepositoryServiceTest
     {
         when(mockBreedRepository.findOne(BREED_ID)).thenReturn(breed1);
         Breed breed = testService.getOne(BREED_ID);
-        assertThat("The id of the breed", breed.getId(), is(BREED_ID));
+        assertThat("The id of the breed", breed.getBreedId(), is(BREED_ID));
         assertThat("The id of the breed", breed.getName(), is(BREED_NAME));
     }
 

@@ -10,14 +10,15 @@ import com.kadmandu.petme.web.controller.AnimalController;
 import com.kadmandu.petme.web.entity.AnimalDTO;
 
 @Component
-public class AnimalResourceAssembler implements ResourceAssembler<AnimalDTO, AnimalResource> {
+public class AnimalResourceAssembler implements ResourceAssembler<AnimalDTO, AnimalResource>
+{
 
     @Override
-    public AnimalResource toResource(final AnimalDTO animalDto) {
+    public AnimalResource toResource(final AnimalDTO animalDto)
+    {
         final AnimalResource animalResource = new AnimalResource(animalDto);
         animalResource.add(linkTo(
-                methodOn(AnimalController.class).getAnimal(animalDto.getId()))
-                .withSelfRel());
+            methodOn(AnimalController.class).getAnimal(animalDto.getAnimalId())).withSelfRel());
         return animalResource;
     }
 

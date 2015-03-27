@@ -20,11 +20,11 @@ public interface IBaseRepositoryService<T> {
     /**
      * Retrieves one entity by its id
      * 
-     * @param id the id of the entity to search for
+     * @param repositoryId the id of the entity to search for
      * 
      * @return the matched entity
      */
-    T getOne(String id);
+    T getOne(String repositoryId);
 
     /**
      * Creates a new entity in the data source.
