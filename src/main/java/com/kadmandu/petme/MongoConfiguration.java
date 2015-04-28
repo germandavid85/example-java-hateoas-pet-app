@@ -1,8 +1,6 @@
 package com.kadmandu.petme;
 
-import com.mongodb.Mongo;
-import com.mongodb.MongoClient;
-import com.mongodb.ServerAddress;
+import java.net.UnknownHostException;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -11,9 +9,13 @@ import org.springframework.context.annotation.PropertySources;
 import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
+import com.mongodb.Mongo;
+import com.mongodb.MongoClient;
+import com.mongodb.ServerAddress;
+
 @Configuration
 @EnableMongoRepositories
-@PropertySources(value = {@PropertySource("application.properties")})
+@PropertySources(value = { @PropertySource("application.properties") })
 public class MongoConfiguration extends AbstractMongoConfiguration
 {
     /**
@@ -37,9 +39,9 @@ public class MongoConfiguration extends AbstractMongoConfiguration
     }
 
     @Override
-    public Mongo mongo() throws Exception
+    public Mongo mongo() throws UnknownHostException
     {
-         return new MongoClient(new ServerAddress(dbHost, dbPort));
+        return new MongoClient(new ServerAddress(dbHost, dbPort));
     }
 
     @Override
