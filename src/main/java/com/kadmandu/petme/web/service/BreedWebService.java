@@ -2,6 +2,7 @@ package com.kadmandu.petme.web.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -43,9 +44,12 @@ public class BreedWebService implements IBreedWebService
     public List<BreedDTO> getAll()
     {
         List<Breed> breedsDomain = breedRepositoryService.getAll();
-        final List<BreedDTO> breeds = new ArrayList<BreedDTO>(breedsDomain.size());
+        final List<BreedDTO> breeds = new ArrayList<>(breedsDomain.size());
 
-        breedsDomain.stream().forEach((breed) -> breeds.add(breedTranslator.translateTo(breed)));
+        breeds.addAll(
+            breedsDomain.stream()
+                .map(breedTranslator::translateTo)
+                .collect(Collectors.toList()));
 
         return breeds;
     }

@@ -2,6 +2,7 @@ package com.kadmandu.petme.web.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -36,38 +37,35 @@ public class AnimalWebService implements IAnimalWebService
     @Override
     public List<AnimalDTO> getAll()
     {
-        final List<AnimalDTO> animals = new ArrayList<AnimalDTO>(animalRepositoryService.getAll()
-            .size());
-        animalRepositoryService.getAll().stream()
-            .forEach((animal) -> animals.add(animalTranslator.translateTo(animal)));
+        List<Animal> animals = animalRepositoryService.getAll();
+        final List<AnimalDTO> animalDTOs = new ArrayList<>(animals.size());
 
-        return animals;
+        animalDTOs.addAll(
+            animals.stream()
+                .map(animalTranslator::translateTo)
+                .collect(Collectors.toList()));
+
+        return animalDTOs;
     }
 
     @Override
     public AnimalDTO getOne(final String animalId)
     {
-        final AnimalDTO animalDto = animalTranslator
-            .translateTo(animalRepositoryService.getOne(animalId));
-        return animalDto;
+        return animalTranslator.translateTo(animalRepositoryService.getOne(animalId));
     }
 
     @Override
     public AnimalDTO create(final AnimalDTO entity)
     {
         final Animal animal = animalTranslator.translateFrom(entity);
-        final AnimalDTO animalDto = animalTranslator.translateTo(animalRepositoryService
-            .create(animal));
-        return animalDto;
+        return animalTranslator.translateTo(animalRepositoryService.create(animal));
     }
 
     @Override
     public AnimalDTO update(final AnimalDTO entity)
     {
         final Animal animal = animalTranslator.translateFrom(entity);
-        final AnimalDTO animalDto = animalTranslator.translateTo(animalRepositoryService
-            .create(animal));
-        return animalDto;
+        return animalTranslator.translateTo(animalRepositoryService.create(animal));
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.kadmandu.petme.web.controller;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -44,15 +45,14 @@ public class AnimalController {
     @RequestMapping(method = RequestMethod.GET, produces = "application/json")
     public @ResponseBody ResponseEntity<List<AnimalResource>> getAllAnimals() {
         final List<AnimalDTO> animalsDto = animalService.getAll();
-        final List<AnimalResource> animalResources = new ArrayList<AnimalResource>(
-                animalsDto.size());
+        final List<AnimalResource> animalResources = new ArrayList<>(animalsDto.size());
 
-        animalsDto.stream().forEach(
-                (animal) -> animalResources.add(resourceAssembler
-                        .toResource(animal)));
+        animalResources.addAll(
+            animalsDto.stream()
+                .map(resourceAssembler::toResource)
+                .collect(Collectors.toList()));
 
-        return new ResponseEntity<List<AnimalResource>>(animalResources,
-                HttpStatus.OK);
+        return new ResponseEntity<>(animalResources, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{animalid}", method = RequestMethod.GET, produces = "application/json")
@@ -63,7 +63,7 @@ public class AnimalController {
         final AnimalResource resource = resourceAssembler
                 .toResource(animalResponse);
 
-        return new ResponseEntity<AnimalResource>(resource, HttpStatus.OK);
+        return new ResponseEntity<>(resource, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
