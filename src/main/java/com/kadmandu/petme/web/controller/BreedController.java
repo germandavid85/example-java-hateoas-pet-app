@@ -86,8 +86,6 @@ public class BreedController
         @PathVariable(value = "animalid") final String animalId,
         @RequestBody final BreedDTO breedDto)
     {
-        AnimalDTO animalDto = new AnimalDTO();
-        animalDto.setAnimalId(animalId);
         BreedDTO createdBreed = breedService.create(breedDto);
 
         resourceAssembler.setAnimalId(animalId);

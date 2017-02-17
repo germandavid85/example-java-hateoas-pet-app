@@ -1,19 +1,12 @@
-buildscript {
-    repositories {
-        maven { url "http://repo.spring.io/libs-release" }
-        mavenLocal()
-        mavenCentral()
-    }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.1.9.RELEASE")
-    }
+
+plugins {
+    id 'jacoco'
+    id 'com.github.kt3k.coveralls' version '2.6.3'
 }
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
-apply plugin: 'spring-boot'
-apply plugin: 'jacoco'
 apply plugin: 'findbugs'
 apply plugin: 'pmd'
 
@@ -29,7 +22,6 @@ jar {
 }
 
 repositories {
-    mavenLocal()
     mavenCentral()
     maven { url "http://repo.spring.io/libs-release" }
 }
@@ -45,7 +37,7 @@ dependencies {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.2'
+    gradleVersion = '3.3'
 }
 
 jacocoTestReport {
@@ -54,6 +46,11 @@ jacocoTestReport {
         csv.enabled false
         html.destination "${buildDir}/jacocoHtml"
     }
+}
+
+jacoco {
+    toolVersion = "0.7.6.201602180812"
+    reportsDir = file("$buildDir/customJacocoReportDir")
 }
 
 test {
