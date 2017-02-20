@@ -1,6 +1,8 @@
 package com.kadmandu.petme;
 
 import java.net.UnknownHostException;
+import java.util.Collections;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -21,7 +23,7 @@ public class MongoConfiguration extends AbstractMongoConfiguration
     /**
      * The base package to scan for persistence objects.
      */
-    private static final String MAPPING_BASE_PACKAGE = "com.kadmandu.petme.repository";
+    private static final List<String> MAPPING_BASE_PACKAGE = Collections.singletonList("com.kadmandu.petme.repository");
 
     @Value("${spring.data.mongodb.dbname}")
     private String dbName;
@@ -45,7 +47,7 @@ public class MongoConfiguration extends AbstractMongoConfiguration
     }
 
     @Override
-    protected String getMappingBasePackage()
+    protected List<String> getMappingBasePackages()
     {
         return MAPPING_BASE_PACKAGE;
     }
