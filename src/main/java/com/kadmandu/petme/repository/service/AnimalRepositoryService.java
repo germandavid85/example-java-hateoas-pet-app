@@ -25,7 +25,7 @@ public class AnimalRepositoryService implements IAnimalRepositoryService {
      * @param animalPersistence the persistence data access, injected by spring
      */
     @Autowired
-    public AnimalRepositoryService(AnimalRepository animalPersistence) {
+    public AnimalRepositoryService(final AnimalRepository animalPersistence) {
         this.animalPersistence = animalPersistence;
     }
 
