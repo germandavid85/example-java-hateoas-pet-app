@@ -77,4 +77,23 @@ public class AnimalController {
         httpHeaders.setLocation(URI.create(resourceUri));
         return new ResponseEntity<>(null, httpHeaders, HttpStatus.CREATED);
     }
+
+    @RequestMapping(value = "/{animalid}", method = RequestMethod.GET, produces = "application/json")
+    public @ResponseBody ResponseEntity<AnimalResource> update(
+            @RequestBody final AnimalDTO animalDTO) {
+        final AnimalDTO animalResource = animalService.update(animalDTO);
+        final AnimalResource resource = resourceAssembler
+                .toResource(animalResource);
+
+        return new ResponseEntity<>(resource, HttpStatus.OK);
+    }
+
+//    @RequestMapping(value = "/{animalid}", method = RequestMethod.GET, produces = "application/json")
+//    public @ResponseBody ResponseEntity<AnimalResource> delete(
+//            @RequestBody final AnimalDTO animalDto) {
+//        animalService.delete(animalDto);
+//
+//        return new ResponseEntity<>(HttpStatus.OK);
+//    }
+
 }
