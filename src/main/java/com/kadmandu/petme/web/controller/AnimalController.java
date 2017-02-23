@@ -79,18 +79,13 @@ public class AnimalController {
     }
 
     @RequestMapping(value = "/{animalid}", method = RequestMethod.GET, produces = "application/json")
-    public @ResponseBody ResponseEntity<AnimalResource> u(
-            @RequestBody final AnimalDTO animal$dto) {
-        AnimalDTO animal1 = new AnimalDTO();
+    public @ResponseBody ResponseEntity<AnimalResource> update(
+            @RequestBody final AnimalDTO animalDTO) {
+        final AnimalDTO animalResource = animalService.update(animalDTO);
+        final AnimalResource resource = resourceAssembler
+                .toResource(animalResource);
 
-        if (animal$dto == null)
-            throw new IllegalStateException();
-
-        final AnimalDTO r = animalService.update(animal$dto);
-        final AnimalResource m_resource = resourceAssembler
-                .toResource(r);
-
-        return new ResponseEntity<>(m_resource, HttpStatus.OK);
+        return new ResponseEntity<>(resource, HttpStatus.OK);
     }
 
 //    @RequestMapping(value = "/{animalid}", method = RequestMethod.GET, produces = "application/json")
@@ -100,4 +95,5 @@ public class AnimalController {
 //
 //        return new ResponseEntity<>(HttpStatus.OK);
 //    }
+
 }
